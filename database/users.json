@@ -1,0 +1,182 @@
+[
+  {
+    "login": "usuario01",
+    "userid": 1001,
+    "region": 5,
+    "password": "senhaSegura01!"
+  },
+  {
+    "login": "user_alpha",
+    "userid": 101,
+    "region": 8,
+    "password": "Pwd@UserAlpha"
+  },
+  {
+    "login": "loginXYZ",
+    "userid": 1003,
+    "region": 2,
+    "password": "passwordXYZ#321"
+  },
+  {
+    "login": "primeiroAcesso",
+    "userid": 1004,
+    "region": 1,
+    "password": "acesso_primeiro_123"
+  },
+  {
+    "login": "tester_beta",
+    "userid": 641,
+    "region": 9,
+    "password": "TestePass_Beta!"
+  },
+  {
+    "login": "dadosUser",
+    "userid": 1439,
+    "region": 4,
+    "password": "dadosUser_secure"
+  },
+  {
+    "login": "admin_system",
+    "userid": 1069,
+    "region": 10,
+    "password": "AdminS_Pass_2025"
+  },
+  {
+    "login": "guest_account",
+    "userid": 1008,
+    "region": 3,
+    "password": "guest_temporary"
+  },
+  {
+    "login": "dev_user",
+    "userid": 1009,
+    "region": 7,
+    "password": "DevUser@Code"
+  },
+  {
+    "login": "manager_01",
+    "userid": 1010,
+    "region": 6,
+    "password": "ManagerPass_01!"
+  },
+  {
+    "login": "client_portal",
+    "userid": 1423,
+    "region": 2,
+    "password": "PortalClient_secure"
+  },
+  {
+    "login": "network_user",
+    "userid": 1012,
+    "region": 5,
+    "password": "NetworkPwd_abc"
+  },
+  {
+    "login": "suporte_tecnico",
+    "userid": 1013,
+    "region": 1,
+    "password": "SuporteTec_2025!"
+  },
+  {
+    "login": "marketing_acc",
+    "userid": 1014,
+    "region": 8,
+    "password": "Marketing@Pass"
+  },
+  {
+    "login": "hr_department",
+    "userid": 1015,
+    "region": 4,
+    "password": "HRDept_Pass_secure"
+  },
+  {
+    "login": "financeiro_user",
+    "userid": 1016,
+    "region": 9,
+    "password": "Financeiro_Pass#2025"
+  },
+  {
+    "login": "data_analyst",
+    "userid": 1017,
+    "region": 3,
+    "password": "DataAnalyst!Pwd"
+  },
+  {
+    "login": "operation_team",
+    "userid": 1018,
+    "region": 6,
+    "password": "OpsTeam_Secure_123"
+  },
+  {
+    "login": "content_creator",
+    "userid": 1019,
+    "region": 7,
+    "password": "ContentCreator@Pass"
+  },
+  {
+    "login": "project_lead",
+    "userid": 1020,
+    "region": 10,
+    "password": "ProjectLead!2025"
+  },
+  {
+    "login": "design_studio",
+    "userid": 1021,
+    "region": 5,
+    "password": "DesignStudio_Pass"
+  },
+  {
+    "login": "sales_rep",
+    "userid": 1022,
+    "region": 2,
+    "password": "SalesRep_Secure_XYZ"
+  },
+  {
+    "login": "research_dev",
+    "userid": 409,
+    "region": 8,
+    "password": "RnD_Pass_2025!"
+  },
+  {
+    "login": "logistics_mgr",
+    "userid": 1024,
+    "region": 1,
+    "password": "LogisticsMgr@Pwd"
+  },
+  {
+    "login": "customer_svc",
+    "userid": 1025,
+    "region": 4,
+    "password": "CustomerSvc_Pass!"
+  },
+  {
+    "login": "training_acc",
+    "userid": 1026,
+    "region": 9,
+    "password": "TrainingAcc_123"
+  },
+  {
+    "login": "external_partner",
+    "userid": 1027,
+    "region": 3,
+    "password": "ExternalPartner_secure"
+  },
+  {
+    "login": "it_support",
+    "userid": 1028,
+    "region": 6,
+    "password": "ITSupport_Pass#2025"
+  },
+  {
+    "login": "security_auditor",
+    "userid": 1029,
+    "region": 7,
+    "password": "SecurityAudit!Pwd"
+  },
+  {
+    "login": "development_env",
+    "userid": 757,
+    "region": 10,
+    "password": "DevEnv_Secure_Pass"
+  }
+]
