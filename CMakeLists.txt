@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Adds the includes directory.
 include_directories(include)
+include_directories(lib)
 
 # Recursively searches for all .cpp files in src/ and subdirectories.
 file(GLOB_RECURSE SOURCES
@@ -27,11 +28,15 @@ file(GLOB_RECURSE SOURCES
 #
 # NOTE: main.cpp is already in SOURCES, explicitly including it is not
 # necessary (But I want to leave it here because yes :D).
-add_executable(forest ${SOURCES} src/main.cpp)
+add_executable(forest ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 # Adds the include directories to the 'forest' target.
 target_include_directories(forest PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_include_directories(forest PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
 
 # Set compilation flags.
