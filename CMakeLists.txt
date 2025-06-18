@@ -23,22 +23,14 @@ file(GLOB_RECURSE SOURCES
     src/*.cpp
 )
 
-# Create the executable called 'forest' using the source files found and
-# main.cpp.
-#
-# NOTE: main.cpp is already in SOURCES, explicitly including it is not
-# necessary (But I want to leave it here because yes :D).
-add_executable(forest ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+# Create the executable called 'forest' using the source files found.
+add_executable(forest ${SOURCES})
 
 # Adds the include directories to the 'forest' target.
 target_include_directories(forest PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_include_directories(forest PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
-
 # Set compilation flags.
 target_compile_options(forest PRIVATE
     -Wall
