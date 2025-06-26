@@ -24,12 +24,15 @@ using value_type = long long; //<! Define o tipo de valor armazenado nos nós da
  * @brief Estrutura que representa um nó na árvore binária de busca.
  * @details Cada nó contém uma chave, um par ordenado de dados e ponteiros para os filhos esquerdo e direito.
  */
-struct Node {
+struct Node
+{
+  
   value_type key{}; //!< Chave do nó, usada para ordenação na árvore.
   User m_data; //!< Dados associados ao nó, representados como uma estrutura User.
   Node *m_left{};  //!< Ponteiro para o filho à esquerda.
   Node *m_right{}; //!< Ponteiro para o filho à direita.
-
+  value_type height{0}; //!< Altura do nó na árvore, usada para balanceamento 
+  
     /**
      * @brief Construtor padrão para Node.
      * @param key Chave do nó (default é value_type()).
