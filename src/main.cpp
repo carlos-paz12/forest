@@ -5,6 +5,17 @@
 #include <iostream>          // std::cerr, std::cout
 #include <nlohmann/json.hpp> // nlohmann::json
 #include <vector>            // std::vector
+#include <random>            // std::random_device, std::mt19937, std::shuffle
+#include "forest/tree.hpp"    //TreeNodePtr basic of tests 
+
+using vec_users = std::vector<User>; //!< Alias for a vector of User objects.
+
+void ramdomize(vec_users &users) {
+  std::random_device rd; //<! Random number generator
+  std::mt19937 g(rd());  //<! Seed the generator
+
+  std::shuffle(users.begin(), users.end(), g); //<! Shuffle the vector
+}
 
 int main() {
   std::cout << ">>> Implementation of the AVL and Black-Red trees. <<<\n\n";
@@ -37,11 +48,19 @@ int main() {
     std::cerr << ">>> JSON type conversion error: " << e.what() << "\n";
     return EXIT_FAILURE;
   }
+   ramdomize(users); //<! Randomize the order of users.
 
   // [!] Print all usert to debug.
   for (const auto &user : users) {
     std::cout << "Username: " << user.login << ", ID: " << user.userid << '\n';
   }
+  TreeNodePtr tree{ nullptr }; //<! Initialize the tree pointer to nullptr.
+  //!< Insert each user into the binary search tree.
+  for (const auto &user : users) {
+    auto key = create_key(user); //<! Create a unique key for the user.
+    insert(tree, key, user);      //<! Insert the user into the tree.
+  }
+  print_tree(tree); //<! Print the tree structure.
 
   return EXIT_SUCCESS;
 }
