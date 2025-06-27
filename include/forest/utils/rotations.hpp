@@ -31,7 +31,7 @@ value_type balance_factor(TreeNodePtr node) {
  * @return TreeNodePtr  Pointer to the new root of the subtree after rotation.
  */
 TreeNodePtr r_simple_left(TreeNodePtr &node){
-  if (node == nullptr || node->m_left == nullptr) return node; // Protege contra ponteiros nulos
+  if (node == nullptr || node->m_left == nullptr) return node; //checks for null pointers
 
   auto temp{ node->m_left }; //!< Temporary pointer to the left child of the root.
   node->m_left = temp->m_right; //!< Rotates the left subtree to the right.
@@ -49,7 +49,7 @@ TreeNodePtr r_simple_left(TreeNodePtr &node){
  * @return TreeNodePtr  Pointer to the new root of the subtree after rotation.
  */
 TreeNodePtr r_simple_right(TreeNodePtr &node){
-  if (node == nullptr || node->m_right == nullptr) return node; // Protege contra ponteiros nulos
+  if (node == nullptr || node->m_right == nullptr) return node; //<! checks for null pointers
   auto temp{ node->m_right }; //!< Temporary pointer to the right child of the root.
   node->m_right = temp->m_left; //!< Rotates the right subtree to the left.
   temp->m_left = node; //!< Sets the root as the left child of the temporary node.

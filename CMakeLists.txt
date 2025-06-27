@@ -31,6 +31,9 @@ target_include_directories(forest PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
+
+add_executable(forest_tests tests/utils/rotations_test.cpp)
+
 # Set compilation flags.
 target_compile_options(forest PRIVATE
     -Wall
