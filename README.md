@@ -1,12 +1,32 @@
-# Forest
-Implementation of the AVL and Black-Red trees.
+# forest
 
 ## Introduction
-> todo
+**forest** is a implementation of AVL and Black-Red self-balancing binary search tree, using C++ programming language, to stores `User` structs.
 
-## Compiling and Runnig
+The project supports classic operations like:
+- Insertion
+- Search
+- Removal
+- Visual representation (ASCII tree with optional color)
+
+
+## Authors
+This project was developed by:
+- Carolina Nunes (<carolina.nunes.110@ufrn.edu.br>);
+- Diego Luan (<luan.souza.134@ufrn.edu.br>);
+- Flávio Júnior (<flavinhoj78@gmail.com>);
+- Carlos Paz (<carlos.paz.707@ufrn.edu.br>);
+- Leandro Andrade (<leandro.andrade.401@ufrn.edu.br>);
+- Lucas Graziano (<lucasgraziano7@gmail.com>).
+
+As part of the _Estrutura de Dados Básicas II_ course at **UFRN**.
+
+## Compiling and Running
 ### Using cmake
-*Note:* This method requires CMake (>= 3.22.1) to be installed on your system. CMake is a cross-platform build system generator used to configure and compile the project. If it's not already installed, you can install it using your system’s package manager (e.g., sudo apt install cmake on Debian/Ubuntu or brew install cmake on macOS).
+> [!note]
+> This method requires CMake (>= 3.22.1) to be installed on your system. CMake is a cross-platform build system generator used to configure and compile the project. If it's not already installed, you can install it using your system’s package manager (e.g., `sudo apt install cmake` on Debian/Ubuntu or `brew install cmake` on macOS).
+
+Once CMake is set up, follow the steps:
 
 1. Clone this repository:
 
@@ -85,10 +105,6 @@ clang++ -std=c++17 -Wall -Wextra -Wpedantic -O2 \
 ./build/forest
 ```
 
-## Authors
-This project was developed by:
-- Carolina Nunes (<carolina.nunes.110@ufrn.edu.br>);
-- Diego Luan (<luan.souza.134@ufrn.edu.br>);
-- Carlos Paz (<carlos.paz.707@ufrn.edu.br>);
-- Leandro Andrade (<leandro.andrade.401@ufrn.edu.br>);
-- Lucas Graziano (lucasgraziano7@gmail.com).
+---
+
+&copy; DIMAp | Departamento de Informática e Matemática Aplicada - 2025
