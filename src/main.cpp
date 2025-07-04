@@ -4,6 +4,7 @@
 
 //=== Internal includes ===
 // Project-specific includes
+#include "black_red.hpp"
 #include "tree_example.hpp" // TreeNodePtr basic of tests
 #include "user.hpp"         // User definition
 
@@ -58,12 +59,35 @@ std::vector<User> init_db()
   return std::move(users);
 }
 
+void testandorbtree()
+{
+  redblacktree arvore;
+  User usuario;
+  arvore.insert(15, usuario);
+  arvore.printtree();
+  arvore.insert(8, usuario);
+  arvore.printtree();
+  arvore.insert(30, usuario);
+  arvore.printtree();
+  arvore.insert(12, usuario);
+  std::cout << "\n\n";
+  arvore.printtree();
+  /*arvore.insert(13, usuario);*/ // <- esse caso funciona
+  std::cout << "\n\n\ninserindo 10\n";
+  arvore.insert(10, usuario); // esse caso nao funciona
+  // o erro eh nas rotacoes, em um momento o node toma o valor de node->dad->key por alguma ra:(
+  std::cout << "\n\n";
+  arvore.printtree();
+}
+
 int main()
 {
   std::cout << ">>> Implementation of the AVL and Black-Red trees. <<<\n\n";
 
   // [!] Attempt to convert the JSON data to a vector of User objects.
   std::vector<User> users{ init_db() };
+
+  testandorbtree();
 
   return EXIT_SUCCESS;
 }
