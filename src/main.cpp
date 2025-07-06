@@ -59,41 +59,12 @@ std::vector<User> init_db()
   return std::move(users);
 }
 
-void testandorbtree()
-{
-  redblacktree arvore;
-  User usuario;
-
-  arvore.insert(15, usuario);
-  std::cout << '\n';
-
-  arvore.insert(8, usuario);
-  std::cout << '\n';
-
-  arvore.insert(30, usuario);
-  std::cout << '\n';
-
-  arvore.insert(12, usuario);
-  std::cout << "\n";
-
-  arvore.insert(10, usuario);
-  std::cout << "\n";
-
-  arvore.insert(32, usuario);
-  std::cout << "\n";
-
-  arvore.insert(38, usuario);
-  std::cout << "\n";
-}
-
 int main()
 {
   std::cout << ">>> Implementation of the AVL and Black-Red trees. <<<\n\n";
 
   // [!] Attempt to convert the JSON data to a vector of User objects.
   std::vector<User> users{ init_db() };
-
-  testandorbtree();
 
   return EXIT_SUCCESS;
 }

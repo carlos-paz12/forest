@@ -18,8 +18,8 @@ function(create_test filename)
 
     # Include paths to allow non-relative includes like "rotations.hpp" and "json.hpp"
     target_include_directories(${TEST_EXECUTABLE} PRIVATE
-        ${CMAKE_SOURCE_DIR}/include   # Project headers
-        ${CMAKE_SOURCE_DIR}/lib       # Third-party or local libs
+        ${CMAKE_SOURCE_DIR}/include # Project headers
+        ${CMAKE_SOURCE_DIR}/lib # Third-party or local libs
     )
 endfunction()
 
@@ -28,3 +28,4 @@ endfunction()
 # Declare individual test targets using the helper function above
 # This will create a test executable for `rotations_test.cpp`
 create_test(rotations_test)
+create_test(black_red_test)
