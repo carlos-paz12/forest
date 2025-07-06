@@ -7,6 +7,8 @@
 #include "tree_example.hpp"
 #include "user.hpp"
 #include <bits/stdc++.h>
+#include <cstdlib>
+#include <sys/types.h>
 
 /*the 5 key properties of a red black tree:
 
@@ -58,31 +60,69 @@ public:
  */
 void redblacktree::simple_left(rbnode*& node)
 {
-  // if (node == nullptr || node->m_left == nullptr) return node; //checks for null pointers
+  if (not node /*node == nullptr*/ or node->nil or not node->m_right or node->m_right->nil) return;
 
-  rbnode* dir = node->m_right;
-  node->m_right = dir->m_left;
-  if (dir->m_left->nil != 0)
-  { // eh um nil node
-    dir->m_left->dad = node;
-  }
-  dir->dad = node->dad;
-  if (node->dad == nullptr)
-  { // eh a root!
-    // iguala a raiz da arvore
-    root = dir;
-  }
-  else if (node->dad->m_left == node)
-  { // eh o filho da esquerda?
-    node->dad->m_left = dir;
+  auto R = node->m_right;
+  auto t2 = R->m_left;
+
+  R->m_left = node;
+  R->dad = node->dad;
+
+  if (t2 /*t2 != nullptr*/)
+  {
+    node->m_right = t2;
+    t2->dad = node;
   }
   else
   {
-    node->dad->m_right = dir;
+    node->m_right = nullptr;
   }
 
-  dir->m_left = node;
-  node->dad = dir;
+  if (not node->dad /*node->dad == nullptr*/)
+  {
+    root = R; // node era a raiz
+  }
+  else
+  {
+    if (node == node->dad->m_left)
+    {
+      node->dad->m_left = R;
+    }
+    else
+    {
+      node->dad->m_right = R;
+    }
+  }
+
+  node->dad = R;
+  // // if (node == nullptr || node->m_left == nullptr) return node; //checks for null pointers
+
+  // if (not node->nil)
+  // {
+  //   rbnode* dir = node->m_right;
+  //   node->m_right = dir->m_left;
+  //   if (dir->m_left->nil != 0)
+  //   { // eh um nil node
+  //     dir->m_left->dad = node;
+  //   }
+  //   dir->dad = node->dad;
+  //   if (node->dad == nullptr)
+  //   { // eh a root!
+  //     // iguala a raiz da arvore
+  //     root = dir;
+  //   }
+  //   else if (node->dad->m_left == node)
+  //   { // eh o filho da esquerda?
+  //     node->dad->m_left = dir;
+  //   }
+  //   else
+  //   {
+  //     node->dad->m_right = dir;
+  //   }
+
+  //   dir->m_left = node;
+  //   node->dad = dir;
+  // }
 }
 
 /**
@@ -90,31 +130,67 @@ void redblacktree::simple_left(rbnode*& node)
  */
 void redblacktree::simple_right(rbnode*& node)
 {
-  // if (node == nullptr || node->m_right == nullptr) return node; //checks for null pointers
+  if (not node /*node == nullptr*/ or node->nil or not node->m_left or node->m_left->nil) return;
 
-  rbnode* esq = node->m_left;
-  node->m_left = esq->m_right;
-  if (esq->m_right->nil != 0)
-  { // eh um nil node
-    esq->m_right->dad = node;
-  }
-  esq->dad = node->dad;
-  if (node->dad == nullptr)
-  { // eh a root!
-    // iguala a raiz da arvore
-    root = esq;
-  }
-  else if (node->dad->m_right == node)
-  { // eh o filho da direita?
-    node->dad->m_right = esq;
+  rbnode* L = node->m_left;
+  rbnode* t3 = L->m_right;
+
+  L->m_right = node;
+  L->dad = node->dad;
+
+  if (t3 /*t3 != nullptr*/)
+  {
+    node->m_left = t3;
+    t3->dad = node;
   }
   else
   {
-    node->dad->m_left = esq;
+    node->m_left = nullptr;
   }
 
-  esq->m_right = node;
-  node->dad = esq;
+  // Atualizar o pai de t0 para apontar para L
+  if (not node->dad /*node->dad == nullptr*/)
+  {
+    root = L; // t0 era a raiz
+  }
+  else
+  {
+    if (node == node->dad->m_left)
+    {
+      node->dad->m_left = L;
+    }
+    else
+    {
+      node->dad->m_right = L;
+    }
+  }
+
+  node->dad = L;
+
+  // t0 = L;  // faz t0 apontar para nova subárvore raiz
+
+  // t0->m_left = L->m_right;
+  // if (L->m_right->nil)
+  // { // eh um nil node
+  //   L->m_right->dad = t0;
+  // }
+  // L->dad = t0->dad;
+  // if (t0->dad == nullptr)
+  // { // eh a root!
+  //   // iguala a raiz da arvore
+  //   root = L;
+  // }
+  // else if (t0->dad->m_right == t0)
+  // { // eh o filho da direita?
+  //   t0->dad->m_right = L;
+  // }
+  // else
+  // {
+  //   t0->dad->m_left = L;
+  // }
+
+  // L->m_right = t0;
+  // t0->dad = L;
 }
 
 /**
@@ -122,19 +198,18 @@ void redblacktree::simple_right(rbnode*& node)
  */
 void redblacktree::double_left(rbnode*& node)
 {
-  rbnode* outro = node->dad;
+  simple_right(node->m_right);
   simple_left(node);
-  simple_right(outro);
 }
 
 /**
  * Implements a double right rotation
  */
+
 void redblacktree::double_right(rbnode*& node)
 {
-  rbnode* outro = node->dad;
+  simple_left(node->m_left);
   simple_right(node);
-  simple_left(outro);
 }
 
 /**
@@ -152,15 +227,21 @@ void redblacktree::double_right(rbnode*& node)
  * CASE 4: node has no parent
  *
  */
-void redblacktree::fix_violations(rbnode*& node)
+void redblacktree::fix_violations(rbnode*& no_inserido) //!< *node_inserted* é o nó que acabou de ser inserido.
 {
+  //!< Tio do nó que acabou de ser inserido.
+  rbnode* tio_do_no_inserido;
+  //!< Avô do nó que acabou de ser inserido.
+  rbnode* avo_do_no_inserido;
+  //!< Pai do nó que acabou de ser inserido.
+  rbnode* pai_do_no_inserido;
+  //!< Define se o tio do nó que acabou de ser inserido está à esquerda.
+  bool tio_esta_a_esquerda_do_no_inserido = false;
+  //!< Define se o nó inserido está à esquerda ou à direita do pai.
+  bool no_inserido_eh_filho_a_esquerda = false;
 
-  rbnode* uncle;
-  rbnode* grandpa;
-  bool uncleesq = false;
-  bool nodeesq = false;
-
-  if (node == root)
+  // Nó raíz.
+  if (no_inserido == root)
   {
     if (root->cor == colors::red)
     {
@@ -169,107 +250,55 @@ void redblacktree::fix_violations(rbnode*& node)
     return;
   }
 
-  if (node->dad->cor == colors::black)
+  // caso 1: node has a black parent
+  // just recolor node i guess;
+  // Nó inserido é filho de pai preto.
+
+  pai_do_no_inserido = no_inserido->dad;
+
+  if (pai_do_no_inserido->cor == colors::black)
   {
-    node->cor = colors::red;
+    no_inserido->cor = colors::red;
     return;
   }
 
   // se o pai nao eh preto, obrigatoriamente tem um avo, porque a raiz precisa ser preta
-  grandpa = node->dad->dad;
-  // checo se o node eh left ou right pra ajudar no caso 3
+  avo_do_no_inserido = pai_do_no_inserido->dad;
 
-  if (node->dad->m_left == node)
+  // checo se o node eh left ou right pra ajudar no caso 3
+  if (pai_do_no_inserido->m_left == no_inserido)
   {
-    nodeesq = true;
+    no_inserido_eh_filho_a_esquerda = true;
   }
 
   // significa que o pai esta a direita. logo, o tio esta a esquerda
   // a partir daqui, tenho a direcao do no tio e do no filho
-
-  if (grandpa->m_right == node->dad)
-  { // node eh o filho direito. uncle eh esquerdo
-    uncle = grandpa->m_left;
-    uncleesq = true;
+  if (avo_do_no_inserido->m_right == pai_do_no_inserido)
+  {
+    tio_do_no_inserido = avo_do_no_inserido->m_left;
+    tio_esta_a_esquerda_do_no_inserido = true;
   }
   else
   {
-    uncle = grandpa->m_right;
+    tio_do_no_inserido = avo_do_no_inserido->m_right;
   }
 
   // a partir de agora o pai ja eh vermelho
-
-  if (uncle->cor == colors::red)
-  {
-    node->cor = colors::red;
-    node->dad->cor = colors::black;
-    uncle->cor = colors::black;
-    grandpa->cor = colors::red;
-    fix_violations(node->dad->dad); // eu chamo recursivamente ou uso um while e atualizo os valores?
-  }
-
-  else if (uncle->cor == colors::black)
-  {
-
-    // if its away from its uncle. wtf. how is this a thing.
-    if ((uncleesq && nodeesq) || (!uncleesq && !nodeesq))
-    { // ou os 2 vao pra a direita ou os 2 pra a esquerda
-
-      if (uncleesq)
-      {
-        simple_right(node->dad);
-        simple_left(grandpa);
-      }
-      else
-      {
-        simple_left(node->dad);
-        simple_right(grandpa);
-      }
-      node->cor = colors::black;
-      grandpa->cor = colors::red;
-      return;
-    }
-
-    else
-    {
-      if (nodeesq == 1)
-      {
-        simple_right(grandpa);
-      }
-      else
-      {
-        simple_left(grandpa);
-      }
-      node->cor = colors::red;
-      node->dad->cor = colors::black;
-      grandpa->cor = colors::red;
-
-      // cabo aqui
-      return;
-    }
-  }
-
-  else
-  { //
-    if (node->dad == nullptr)
-    {
-      node->cor = colors::black;
-    }
-  }
-
-  // caso 1: node has a black parent
-  // just recolor node i guess;
 
   /* caso 2: parent of u is red
       & its uncle is red
 
       uncle and dad become black
       node becomes red
-
-
-
-
   */
+  if (tio_do_no_inserido->cor == colors::red)
+  {
+    no_inserido->cor = colors::red;
+    pai_do_no_inserido->cor = colors::black;
+    tio_do_no_inserido->cor = colors::black;
+    avo_do_no_inserido->cor = colors::red;
+    fix_violations(avo_do_no_inserido); // eu chamo recursivamente ou uso um while e atualizo os valores?
+  }
 
   /* caso 3: red parent, black uncle
 
@@ -299,14 +328,86 @@ void redblacktree::fix_violations(rbnode*& node)
 
 
   */
+  else if (tio_do_no_inserido->cor == colors::black)
+  {
 
-  /* node has no parent
-      color u black
-      isso eh tipo um caso
+    if (tio_esta_a_esquerda_do_no_inserido) // pai está à direita
+    {
+      if (no_inserido_eh_filho_a_esquerda) // filho está à esquerda
+      {
+        //            Avô
+        //           /   \
+        //          /     \
+        //         /       \
+        //       Tio       Pai
+        //      /   \     /   \
+        //     t0    t1 Filho  t2
+        std::cout << "Breakpoint 1 (Rotação dupla à esquerda):\n";
+        double_left(avo_do_no_inserido);
+        no_inserido->cor = colors::black;
+        avo_do_no_inserido->cor = colors::red;
+      }
+      else if (not no_inserido_eh_filho_a_esquerda) // filho está à direita
+      {
+        //            Avô
+        //           /   \
+        //          /     \
+        //         /       \
+        //       Tio       Pai
+        //      /   \     /   \
+        //     t0    t1  t2  Filho
+        std::cout << "Breakpoint 2 (Rotação simples à esquerda):\n";
+        simple_left(avo_do_no_inserido);
+        no_inserido->cor = colors::red;
+        pai_do_no_inserido->cor = colors::black;
+        avo_do_no_inserido->cor = colors::red;
+      }
+    }
+    else if (not tio_esta_a_esquerda_do_no_inserido) // pai está à esquerda
+    {
 
-  */
-
-  // caso 4:
+      if (no_inserido_eh_filho_a_esquerda) // filho está à esquerda
+      {
+        //            Avô
+        //           /   \
+        //          /     \
+        //         /       \
+        //       Pai       Tio
+        //      /   \     /   \
+        //   Filho   t0  t1    t2
+        std::cout << "Breakpoint 3 (Rotação simples à direita):\n";
+        simple_right(avo_do_no_inserido);
+        no_inserido->cor = colors::red;
+        pai_do_no_inserido->cor = colors::black;
+        avo_do_no_inserido->cor = colors::red;
+      }
+      else if (not no_inserido_eh_filho_a_esquerda) // filho está à direita
+      {
+        //            Avô
+        //           /   \
+        //          /     \
+        //         /       \
+        //       Pai       Tio
+        //      /   \     /   \
+        //    t0   filho t1    t2
+        std::cout << "Breakpoint 4 (Rotação dupla à direita):\n";
+        double_right(avo_do_no_inserido);
+        no_inserido->cor = colors::black;
+        avo_do_no_inserido->cor = colors::red;
+      }
+    }
+  }
+  else
+  {
+    /* node has no parent
+        color u black
+        isso eh tipo um caso
+    */
+    if (no_inserido->dad == nullptr)
+    {
+      no_inserido->cor = colors::black;
+    }
+  }
 }
 
 /**
@@ -315,75 +416,60 @@ void redblacktree::fix_violations(rbnode*& node)
  */
 void redblacktree::insert(value_type key, User data)
 {
-
-  rbnode* temp = root;
-  rbnode* painho;
-  rbnode* novo = new rbnode(key, data); // ja inicializa pai como nullptr
-  /*novo->key = key;
-  novo->m_data = data;*/
-
-  bool direita = 0;
-
-  while (temp->nil != 1)
-  { // enquanto nao for nil !
-    painho = temp;
-    if (key < temp->key)
-    {
-      direita = 0;
-      temp = temp->m_left;
-    }
-    else
-    {
-      direita = 1;
-      temp = temp->m_right;
-    }
-  }
-
-  // chegamos a um nil; o nosso no deve ficar no lugar dele
-
-  if (temp->dad == nullptr)
+  rbnode* novo = new rbnode(key, data);
+  novo->cor = colors::red;
+  if (root->nil)
   {
-    // a árvore está vazia, somente com o nó inicial nil
-    // adiciona o novo como raiz, faz jogo de ponteiros com o resto
-    temp->dad = novo;
-    novo->m_right = temp;
     root = novo;
-
-    rbnode* nill = new rbnode;
-    nill->nil = true;
-    nill->dad = novo;
-    novo->m_left = nill;
-
-    return; // i dont think we have any violations to fix here??
   }
-
   else
   {
+    rbnode* temp = root;
+    rbnode* painho = nullptr;
+    novo->nil = false;
+    bool direita = false;
 
-    // novo->height = (painho->height) + 1; // i dont think we actually need this tho
-
-    rbnode* nil1 = new rbnode;
-    nil1->cor = colors::black;
-    nil1->nil = true;
+    while (temp != nullptr && temp->nil != true)
+    {
+      painho = temp;
+      if (key < temp->key)
+      {
+        direita = false;
+        temp = temp->m_left;
+      }
+      else
+      {
+        direita = true;
+        temp = temp->m_right;
+      }
+    }
 
     novo->dad = painho;
-    novo->m_right = temp; // esse eh nil
-    novo->m_left = nil1;
 
-    temp->dad = novo;
-    nil1->dad = novo;
+    rbnode* nilL = new rbnode;
+    nilL->nil = true;
+    nilL->cor = colors::black;
+    nilL->dad = novo;
+
+    rbnode* nilR = new rbnode;
+    nilR->nil = true;
+    nilR->cor = colors::black;
+    nilR->dad = novo;
+
+    novo->m_left = nilL;
+    novo->m_right = nilR;
 
     if (direita)
-    {
       painho->m_right = novo;
-    }
     else
-    { // eh o filho da esquerda
       painho->m_left = novo;
-    }
   }
 
+  std::cout << "Apos insercao:\n";
+  printtree();
+  std::cout << "Apos balanceamento:\n";
   fix_violations(novo);
+  printtree();
 }
 
 // isso aqui basicamente retira o no que a gente quer tirar da arvore.
@@ -499,44 +585,38 @@ void redblacktree::deletenode(value_type key, User data)
 /**
  * temporary funtion that prints (very poorly) a red black tree!
  */
+constexpr const char* RED_BG = "\033[41m";   // Fundo vermelho
+constexpr const char* BLACK_BG = "\033[40m"; // Fundo preto
+constexpr const char* RESET = "\033[0m";
+
 void redblacktree::printtree(rbnode* raiz, std::string s, int a)
 {
-  // (Node * raiz, string s = "\t↳", int a = 0)
-
   if (a == 0)
   {
     raiz = root;
-    std::cout << s << " " << raiz->key << "( root )";
+    const char* cor = (raiz->cor == colors::red) ? RED_BG : BLACK_BG;
+    std::cout << cor << s << " " << raiz->key << " ( root )" << RESET << "\n";
   }
   else if (raiz->nil != true)
   {
-    std::cout << s << " " << raiz->key;
+    const char* cor = (raiz->cor == colors::red) ? RED_BG : BLACK_BG;
+    std::cout << cor << s << " " << raiz->key;
+    if (a == 1)
+      std::cout << " ( L )";
+    else if (a == 2)
+      std::cout << " ( R )";
+    std::cout << RESET << "\n";
   }
   else
   {
-    std::cout << s << "null";
+    std::cout << BLACK_BG << s << "null";
+    if (a == 1)
+      std::cout << " ( L )";
+    else if (a == 2)
+      std::cout << " ( R )";
+    std::cout << RESET << "\n";
+    return;
   }
-
-  if (a == 1)
-  {
-    std::cout << " ( L )";
-  }
-
-  else if (a == 2)
-  {
-    std::cout << " ( R )";
-  }
-
-  if (raiz->cor == colors::black)
-  {
-    std::cout << " - black";
-  }
-  else
-  {
-    std::cout << " - red";
-  }
-
-  std::cout << "\n";
 
   if (raiz->m_right != nullptr)
   {

@@ -63,21 +63,27 @@ void testandorbtree()
 {
   redblacktree arvore;
   User usuario;
+
   arvore.insert(15, usuario);
-  arvore.printtree();
+  std::cout << '\n';
+
   arvore.insert(8, usuario);
-  arvore.printtree();
+  std::cout << '\n';
+
   arvore.insert(30, usuario);
-  arvore.printtree();
+  std::cout << '\n';
+
   arvore.insert(12, usuario);
-  std::cout << "\n\n";
-  arvore.printtree();
-  /*arvore.insert(13, usuario);*/ // <- esse caso funciona
-  std::cout << "\n\n\ninserindo 10\n";
-  arvore.insert(10, usuario); // esse caso nao funciona
-  // o erro eh nas rotacoes, em um momento o node toma o valor de node->dad->key por alguma ra:(
-  std::cout << "\n\n";
-  arvore.printtree();
+  std::cout << "\n";
+
+  arvore.insert(10, usuario);
+  std::cout << "\n";
+
+  arvore.insert(32, usuario);
+  std::cout << "\n";
+
+  arvore.insert(38, usuario);
+  std::cout << "\n";
 }
 
 int main()
