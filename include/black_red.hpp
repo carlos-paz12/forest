@@ -543,7 +543,78 @@ rbnode* redblacktree::search(value_type key, User data)
 /**
  * deals with the violations caused by the deletion of a node in a red black tree
  */
-void redblacktree::fix_delete_violations(rbnode*& node) { }
+void redblacktree::fix_delete_violations(rbnode*& node)
+{
+  rbnode* sibling;
+  while (node != root and node->cor == colors::black)
+  {
+    if (node == node->dad->m_left)
+    {
+      sibling = node->dad->m_right;
+      if (sibling->cor == colors::red)
+      {
+        sibling->cor = colors::black;
+        node->dad->cor = colors::red;
+        simple_left(node->dad);
+        sibling = node->dad->m_right;
+      }
+
+      if (sibling->m_left->cor == colors::black and sibling->m_right->cor == colors::black)
+      {
+        sibling->cor = colors::red;
+        node = node->dad;
+      }
+      else
+      {
+        if (sibling->m_right->cor == colors::black)
+        {
+          sibling->m_left->cor = colors::black;
+          sibling->cor = colors::red;
+          simple_right(sibling);
+          sibling = node->dad->m_right;
+        }
+        sibling->cor = node->dad->cor;
+        node->dad->cor = colors::black;
+        sibling->m_right->cor = colors::black;
+        simple_left(node->dad);
+        node = root;
+      }
+    }
+    else
+    {
+      sibling = node->dad->m_left;
+      if (sibling->cor == colors::red)
+      {
+        sibling->cor = colors::black;
+        node->dad->cor = colors::red;
+        simple_right(node->dad);
+        sibling = node->dad->m_left;
+      }
+
+      if (sibling->m_right->cor == colors::black and sibling->m_left->cor == colors::black)
+      {
+        sibling->cor = colors::red;
+        node = node->dad;
+      }
+      else
+      {
+        if (sibling->m_left->cor == colors::black)
+        {
+          sibling->m_right->cor = colors::black;
+          sibling->cor = colors::red;
+          simple_left(sibling);
+          sibling = node->dad->m_left;
+        }
+        sibling->cor = node->dad->cor;
+        node->dad->cor = colors::black;
+        sibling->m_left->cor = colors::black;
+        simple_right(node->dad);
+        node = root;
+      }
+    }
+  }
+  node->cor = colors::black;
+}
 
 /**
  * Deletes, with the use of helper functions "search", "shift" and "fix_delete_violations",
@@ -551,34 +622,58 @@ void redblacktree::fix_delete_violations(rbnode*& node) { }
  */
 void redblacktree::deletenode(value_type key, User data)
 {
-
-  // fazer uma funcao de search
-
   rbnode* node = search(key, data);
-  rbnode* backup = node;
-  colors hue = node->cor;
-  rbnode* mais;
 
-  // se a esquerda do mano eh nil
-
-  if (node->m_left->nil == true)
+  if (node == root or node->nil)
   {
-    mais = node->m_left;
-    shifting(node, mais); // move o no nulo pro lugar do mano
-  }
-  else if (node->m_right->nil == true)
-  {
-    mais = node->m_right;
-    shifting(node, mais); // ^
+    return; // nó não encontrado / árvore vazia
   }
 
+  rbnode* y = node;
+  rbnode* x;
+  colors original_color = y->cor;
+
+  if (node->m_left->nil)
+  {
+    x = node->m_right;
+    shifting(node, node->m_right);
+  }
+  else if (node->m_right->nil)
+  {
+    x = node->m_left;
+    shifting(node, node->m_left);
+  }
   else
-  { // o mano tem 2 filhos que existem
+  {
+    y = node->m_right;
+    while (!y->m_left->nil)
+    {
+      y = y->m_left;
+    }
+    original_color = y->cor;
+    x = y->m_right;
+
+    if (y->dad == node)
+    {
+      x->dad = y;
+    }
+    else
+    {
+      shifting(y, y->m_right);
+      y->m_right = node->m_right;
+      y->m_right->dad = y;
+    }
+
+    shifting(node, y);
+    y->m_left = node->m_left;
+    y->m_left->dad = y;
+    y->cor = node->cor;
   }
 
-  if (hue == colors::black)
+  delete node;
+  if (original_color == colors::black)
   {
-    fix_delete_violations(mais);
+    fix_delete_violations(x);
   }
 }
 
