@@ -188,7 +188,7 @@ private:
             return searchRecursive(node->right, key);
     }
 
-    void printRecursive(TreeAvlNodePtr node, const std::string& prefix, bool isLeft) {
+  /*   void printRecursive(TreeAvlNodePtr node, const std::string& prefix, bool isLeft) {
         if (!node)
             return;
         std::cout << prefix;
@@ -196,7 +196,28 @@ private:
         std::cout << node->key << "\n";
         printRecursive(node->left, prefix + (isLeft ? "│   " : "    "), true);
         printRecursive(node->right, prefix + (isLeft ? "│   " : "    "), false);
+    } */
+    void printRecursive(TreeAvlNodePtr node, const std::string& prefix, bool isLeft) {
+    std::cout << prefix;
+
+    std::cout << (isLeft ? "├──" : "└──");
+
+    if (node != nullptr) {
+        std::cout << "\033[32m[ key: " << node->key << " ] { \"name\": \"" << node->data.login
+                  << "\", \"userid\": " << node->data.userid
+                  << ", \"region\": \"" << node->data.region
+                  << "\", \"password\": \"" << node->data.password << "\" }\033[0m\n";
+
+        std::string newPrefix = prefix + (isLeft ? "│   " : "    ");
+
+        // Ordem: direita primeiro, depois esquerda
+        printRecursive(node->right, newPrefix, true);
+        printRecursive(node->left, newPrefix, false);
+    } else {
+        std::cout << "\033[31mx\033[0m\n";
     }
+}
+
 
     void destroyRecursive(TreeAvlNodePtr node) {
         if (!node)
