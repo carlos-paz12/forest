@@ -29,4 +29,5 @@ endfunction()
 # This will create a test executable for `rotations_test.cpp`
 create_test(rotations_test)
 create_test(black_red_test)
-create_test(avl_tests.cpp)
+create_test(avl_tests)
+# im happy :)
